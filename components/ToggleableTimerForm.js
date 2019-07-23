@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { PropTypes } from "prop-types";
 import TimerButton from "./TimerButton";
 import TimerForm from "./TimerForm";
 
@@ -33,5 +34,9 @@ const styles = StyleSheet.create({
   },
   buttonPadding: { paddingHorizontal: 15 }
 });
+
+ToggleableTimerForm.propTypes = {
+  onFormSubmit: PropTypes.func.isRequired
+};
 
 export default ToggleableTimerForm;

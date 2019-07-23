@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
+import { PropTypes } from "prop-types";
 import TimerButton from "./TimerButton";
 
 const TimerForm = props => {
@@ -13,6 +14,11 @@ const TimerForm = props => {
     onFormSubmit({ id, title, project });
   };
 
+  useEffect(() => {
+    setTitle(props.title);
+    setProject(props.project);
+  }, []);
+
   return (
     <View style={styles.formContainer}>
       <View style={styles.attributeContainer}>
@@ -21,7 +27,6 @@ const TimerForm = props => {
           <TextInput
             style={styles.textInput}
             underlineColorAndroid="transparent"
-            defaultValue={props.title}
             value={title}
             onChangeText={value => setTitle(value)}
           />
@@ -34,7 +39,6 @@ const TimerForm = props => {
           <TextInput
             style={styles.textInput}
             underlineColorAndroid="transparent"
-            defaultValue={props.project}
             value={project}
             onChangeText={value => setProject(value)}
           />
@@ -93,5 +97,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
+
+TimerForm.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  project: PropTypes.string,
+  onFormSubmit: PropTypes.func.isRequired,
+  onFormClose: PropTypes.func.isRequired
+};
+
+TimerForm.defaultProps = {
+  id: null,
+  title: "",
+  project: ""
+};
 
 export default TimerForm;

@@ -1,10 +1,20 @@
 import React from "react";
+import { PropTypes } from "prop-types";
 import { StyleSheet, Text, View } from "react-native";
 
 import { millisecondsToHuman } from "../utils/TimerUtils";
 import TimerButton from "./TimerButton";
 
-const Timer = ({ title, project, elapsed, onEditPress, onRemovePress, id }) => {
+const Timer = ({
+  title,
+  project,
+  elapsed,
+  onEditPress,
+  onRemovePress,
+  id,
+  isRunning,
+  onStartStopPress
+}) => {
   const elapsedString = millisecondsToHuman(elapsed);
 
   return (
@@ -21,7 +31,11 @@ const Timer = ({ title, project, elapsed, onEditPress, onRemovePress, id }) => {
           onPress={() => onRemovePress(id)}
         />
       </View>
-      <TimerButton color="#21B445" title="Start" />
+      <TimerButton
+        color={isRunning ? "#DB2828" : "#21B445"}
+        title={isRunning ? "Stop" : "Start"}
+        onPress={() => onStartStopPress(id)}
+      />
     </View>
   );
 };
@@ -45,5 +59,16 @@ const styles = StyleSheet.create({
   },
   buttonGroup: { flexDirection: "row", justifyContent: "space-between" }
 });
+
+Timer.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  project: PropTypes.string.isRequired,
+  elapsed: PropTypes.number.isRequired,
+  isRunning: PropTypes.bool.isRequired,
+  onEditPress: PropTypes.func.isRequired,
+  onRemovePress: PropTypes.func.isRequired,
+  onStartStopPress: PropTypes.func.isRequired
+};
 
 export default Timer;
